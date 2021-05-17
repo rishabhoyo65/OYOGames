@@ -1,0 +1,52 @@
+@mixin square($param){
+    height: $param;
+    width: $param;
+};
+@mixin margin-top($param){
+    margin-top: $param;
+}
+
+@mixin margin-bottom($param){
+    margin-bottom: $param;
+}
+
+@mixin margin-x($param){
+    margin: 0 $param;
+}
+
+@mixin margin-y($param){
+    margin: $param 0;
+}
+
+@mixin margin($param1, $param2){
+    margin: $param1 $param2;
+}
+
+@mixin padding-top($param){
+    padding-top: $param;
+}
+
+@mixin padding-bottom($param){
+    padding-bottom: $param;
+}
+
+@mixin padding-x($param){
+    padding: 0 $param;
+}
+
+@mixin padding-y($param){
+    padding: $param 0;
+}
+
+@mixin padding($param1, $param2){
+    padding: $param1 $param2;
+}
+
+@mixin round {
+    border-radius: 50%;
+}
+
+@mixin flex-gaps($param1, $param2) {
+    row-gap: $param1;
+    column-gap: $param2;
+}
