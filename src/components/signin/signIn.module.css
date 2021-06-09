@@ -1,0 +1,183 @@
+
+.signInpage{
+    height: 100%;
+}
+
+.rowLogo{
+    height: fit-content;
+    box-sizing: border-box;
+    padding-top: 2rem;
+    padding-left: 10%;
+}
+
+.rowContent {
+    display: flex;
+    box-sizing: border-box;
+    height: calc(100vh - 55px);
+    align-items: center;
+
+}
+
+.col1{
+    margin: 0;
+    padding: 2rem 0;
+    box-sizing: border-box;
+    height: 100%;
+    width: 50%;
+    background-image: url('./background_images/Ellipse_image_background.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.col1 img{ 
+    height: 90%;
+    width: 60vw;
+    background: transparent;
+}
+.col2{
+    margin: 0;
+    height: 100%;
+    width: 50%;
+    box-sizing: border-box;
+    padding: 4rem 0;
+}
+
+.signIn_sec{
+    width: 350px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.col2 .signIn_sec h3{
+    color: var(--blackHigh);
+    font-weight: bold;
+    line-height: 30px;
+    font-size: 1.5rem;
+}
+
+.signIn_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 80%;
+    height: 50%;
+}
+.signIn_form > input{
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.3);
+}
+.signIn_form .checkbox{
+    display: flex;
+    align-items: center;
+}
+.signIn_form .checkbox label{
+    margin: 0 0.5rem;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.password{
+    box-sizing: border-box;
+    position: relative;
+}
+
+.signIn_form .password input{
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+.error {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--buttonRed);
+    height: 20px;
+    margin: 0;
+}
+
+input[type="text" i], input[type="password" i]{
+    padding: 1px 8px;
+    position: relative;
+}
+input[type="submit"] {
+    background-color: var(--buttonRed);
+    color: white;
+}
+input[type=checkbox] {
+   width: 16px;
+   height: 16px; 
+}
+.password img{
+    position: absolute;
+    top: calc(50% - 12px);
+    right: 2%;
+    height: 24px;
+    width: 24px;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.forgot{
+    display: inline-block;
+    padding: 1rem 0;
+    text-decoration: none;
+    text-align: center;
+    color: var(--linkBlue);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+@media screen and (max-width: 770px) {
+    /* start of medium tablet styles */
+    .rowContent{
+        justify-content: space-between;
+    }
+    .col1 img{
+        width: 55vw;
+    }
+    
+    .col2 .signIn_sec {
+        width: 80%;
+        justify-content: center;
+    }
+    .col2 .signIn_sec h3{
+        font-size: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    /* start of phone styles */
+    .col1{
+        display: none;
+    }
+    .col2{
+        margin: 0;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+        padding: 4rem 0;   
+    }
+    .rowLogo{
+        padding-left: 0;
+        margin: 0 calc(50% - 29px);
+    }
+    .col2 .signIn_sec{
+        width: 80%;
+    }
+    .col2 .signIn_sec h3{
+        color: var(--blackHigh);
+        font-weight: bold;
+        line-height: 30px;
+        font-size: 20px;
+    }
+}
