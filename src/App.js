@@ -1,11 +1,19 @@
+import React, {Suspense} from 'react';
 import './App.scss';
+import { Route, Switch } from "react-router-dom";
+import Spinner from "./components/common/spinner/Spinner";
+import Home from "./components/home/Home";
+import SignIn from "./components/signin/SignIn";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={process.env.PUBLIC_URL+"/assets/images/oyo.svg"} className="App-logo" alt="logo" />
-      </header>
+      <Suspense fallback={<Spinner />}>
+        <Switch>
+          <Route path="/" exact component={SignIn} />
+          <Route path="/home" exact component={Home} />
+        </Switch>
+      </Suspense>
     </div>
   );
 }
