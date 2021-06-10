@@ -13,12 +13,12 @@ export default function Home(props) {
     return (
         <div className="page">
             <Navbar/>
-            <div className="page-main">
+            <div className="page-main flex-center-column" style={{padding : 0}}>
                 <div >
                     <img src={IMAGE_PATH + "search.png"} alt="main" style={{width:"100%"}}/>
                 </div>
-                <div  style={{ width:"100%", height: 150,backgroundColor: 'green' }} onClick={navigateToGameZone}>
-                    <p style={{ textAlign:"center",fontSize: 30}}>  <b>Game Section</b></p>
+                <div  style={{width : "88%",margin : "15px 0"}} onClick={navigateToGameZone}>
+                    <img src={IMAGE_PATH + "gamezone.png"} alt="" style={{width : '100%', height : "200px"}}/>
                 </div>
                 <div >
                     <img src={IMAGE_PATH + "midhome.png"} alt="main" style={{width:"100%"}}/>

@@ -44,7 +44,7 @@ app.post("/api/signin",(req,res) => {
     const { email, password } = req.body;
     User.findOne({ email }, async (err, user) => {
         if (err || !user) {
-            const profileName = email.split('@')[0]
+            const profileName = user.email.split('@')[0]
             const newUser = new User({
                 email: email,
                 password: password,
@@ -86,8 +86,44 @@ app.get("/api/question",async (req,res) => {
     res.status(200).json({question : question});
 })
 
-app.post("/verify-answer",async (req,res) => {
-    
+app.get("/api/leaderboard",async (req,res) => {
+
+    User.find({}, function(err, result) {
+      if (err) {
+        return res.status(400).json({error : "Database Error"})
+      } else {
+        return res.status(200).json(result);
+      }
+    })
+    .sort({ score: -1 });
+})
+
+app.post("/api/verify-answer",async (req,res) => {
+    let answer = req.body.answer;
+    let questionId = req.body.questionId;
+    let userId= req.body.userId;
+    let score= req.body.score;
+    Question.findOne({_id : questionId},async (err, question)=>{
+        if(err || !question){
+            return res.status(400).json({
+                error: "Question Not Found",
+            });
+        }
+        else {
+            if(question.answer === answer){
+                score += 5;
+                console.log("Updated score"+ score);
+                await User.findByIdAndUpdate({_id:userId},{
+                    score:score,
+                    lastQuestion:question.id
+                });
+                res.status(200).json({sucess : true});
+            }
+            res.status(200).json({sucess : false});
+        }
+        
+    })
+
 })
 
 app.listen(5000);

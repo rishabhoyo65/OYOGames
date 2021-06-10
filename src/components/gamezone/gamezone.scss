@@ -1,0 +1,17 @@
+.game-section{
+    padding: 0 10px ;
+    width: 60%;
+    height:fit-content;
+    display:flex;
+    flex-direction: column;
+    row-gap: 15px;
+    align-items: center;
+
+}
+.leaderboard{
+    height:100%;
+}
+.leaderboard-table {
+    padding-bottom: 50px;
+    background-color: white;
+}

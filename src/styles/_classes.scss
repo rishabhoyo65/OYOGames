@@ -5,6 +5,10 @@
     display: flex;
     flex-wrap: wrap;
 }
+.flex-space {
+    display: flex;
+    justify-content: space-between;
+}
 .flex-center {
     display: flex;
     align-items: center;
@@ -116,6 +120,8 @@
     width: 100%;
     position: relative;
     top: 70px;
+    padding: 20px 32px;
+    box-sizing: border-box;
 }
 
 .mar-tb-10 {
@@ -124,4 +130,11 @@
 
 .pad-12 {
 padding:12px !important;
+}
+
+.rg-20 {
+    row-gap: 20px;
+}
+.rg-10 {
+    row-gap: 10px;
 }

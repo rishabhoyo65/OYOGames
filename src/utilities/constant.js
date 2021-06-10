@@ -7,7 +7,10 @@ export const SERVER = "localhost:5000";
 export const SIGNIN_API = "/api/signin";
 export const LOCATION_API = "/api/locations";
 export const QUESTION_API = "/api/question";
-
+export const LEADERBOARD_API = "/api/leaderboard";
+export const VERIFY_ANSWER = "/api/verify-answer";
 
 export const PLEASE_ENTER_EMAIL_AND_PASSWORD = "Please enter email and password";
 export const SERVICE_TEMPORARILY_UNAVAILABLE = "Service Temporarily Unavailable";
+export const CORRECT_ANSWER = "Your Answer is correct."
+export const WRONG_ANSWER = "Your Answer is Wrong."

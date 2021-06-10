@@ -9,9 +9,12 @@ const questionSchema = new mongoose.Schema(
             index : true
         },
         question: {
-            content : {
-                type : String,
-                required : true,
+            content:{
+                type: String,
+                required: true
+            },
+            image: {
+                type : String
             },
             image : {
                 type : String
