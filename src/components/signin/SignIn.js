@@ -3,7 +3,7 @@ import styles from "./signIn.module.css";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner";
-import { IMAGE_PATH,ICON_PATH} from "../../utilities/constant";
+import { IMAGE_PATH,ICON_PATH,SIGNIN_API,PLEASE_ENTER_EMAIL_AND_PASSWORD,SERVICE_TEMPORARILY_UNAVAILABLE} from "../../utilities/constant";
 
 
 
@@ -42,6 +42,27 @@ export default function SignIn() {
                 email: user.email,
                 password: user.password,
             };
+            setLoading(true);
+            axios
+                .post(SIGNIN_API, payload)
+                .then((res) => {
+                    if (res && res.data.userId) {
+                        localStorage.setItem("userId", res.data.userId);
+                        localStorage.setItem("userName", res.data.userName);
+                        localStorage.setItem("score", res.data.score);
+                        localStorage.setItem("spinLeft",res.data.spinLeft);
+                        history.push("/home");
+                    } else {
+                        setLoading(false);
+                    }
+                })
+                .catch(function (error) {
+                    let message = (error.response && error.response.data && error.response.data.error) || SERVICE_TEMPORARILY_UNAVAILABLE;
+                    setError(message);
+                    setLoading(false);
+                });
+        } else {
+            setError(PLEASE_ENTER_EMAIL_AND_PASSWORD);
         }
             
     };
