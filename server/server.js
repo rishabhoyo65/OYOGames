@@ -86,16 +86,19 @@ app.get("/question",async (req,res) => {
     res.status(200).json({question : question});
 })
 
-app.get("/leaderboard",async (req,res) => {
+app.get("/api/leaderboard",async (req,res) => {
 
     User.find({}, function(err, result) {
       if (err) {
         console.log(err);
       } else {
         res.json(result);
+        console.log("here");
       }
     })
-    .sort({ score: 1 });
+    .sort({ score: -1 });
+
+    console.log("here");
 })
 
 app.post("/verify-answer",async (req,res) => {
@@ -103,7 +106,7 @@ app.post("/verify-answer",async (req,res) => {
     let questionId = req.body.id;
     let currentUser;
 
-    Question.findOne({_id : questionId},(err, question)=>{
+    Question.findOne({_id : questionId},async (err, question)=>{
         if(err || !question){
             console.log("No such question exists");
         }
