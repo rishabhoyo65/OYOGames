@@ -44,7 +44,7 @@ app.post("/api/signin",(req,res) => {
     const { email, password } = req.body;
     User.findOne({ email }, async (err, user) => {
         if (err || !user) {
-            const profileName = user.email.split('@')[0]
+            const profileName = email.split('@')[0]
             const newUser = new User({
                 email: email,
                 password: password,

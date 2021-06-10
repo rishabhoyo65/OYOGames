@@ -85,7 +85,7 @@ export default function Leaderboard(props) {
                                             borderRadius: "100%",width: "50px",height: "50px"}}>
                                     <div style={{
                                         position: "absolute",left: "50%",top: "50%",
-                                        transform: "translate(-50%, -50%)",color: (userId === user.id) ? "#2f922f":"white"}}>
+                                        transform: "translate(-50%, -50%)",color: "white"}}>
 
                                         {index+1}
 
