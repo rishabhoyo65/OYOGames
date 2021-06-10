@@ -1,23 +1,15 @@
 import React from 'react'
-import "./spinner.scss"
+import "./spinner.css"
+import {IMAGE_PATH} from '../../../utilities/constant'
+
+
+
 
 function Spinner(props) {
     return (
-        <div className = "loader-container" style={{width:props.width, height:props.height}}>
-            <div className="lds-spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+        <div className = "loader-container" style = {props.style}>
+            <img className= "loading" alt="loader"
+            src = {IMAGE_PATH + "loader.svg"}></img>
         </div>
     )
 }
