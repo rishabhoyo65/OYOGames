@@ -44,7 +44,7 @@ app.post("/api/signin",(req,res) => {
     const { email, password } = req.body;
     User.findOne({ email }, async (err, user) => {
         if (err || !user) {
-            const profileName = email.split('@')[0]
+            const profileName = user.email.split('@')[0]
             const newUser = new User({
                 email: email,
                 password: password,
@@ -101,28 +101,42 @@ app.get("/api/leaderboard",async (req,res) => {
     console.log("here");
 })
 
-app.post("/verify-answer",async (req,res) => {
+app.post("/api/verify-answer",async (req,res) => {
     let answer = req.body.answer;
-    let questionId = req.body.id;
-    let currentUser;
-
+    let questionId = req.body.questionId;
+    let userId= req.body.userId;
+    let score= req.body.score;
     Question.findOne({_id : questionId},async (err, question)=>{
-        if(err || !question){
+        if(err){
+            console.log(err);
+        }
+        if(!question){
             console.log("No such question exists");
         }
-        
-        let score = currentUser.score;
-        if(question.answer == answer){
-            score+=1;
+        else {
+            if(question.answer == answer){
+                score+=1;
+            }
+            console.log("Updated score"+ score);
+            await User.findByIdAndUpdate({_id:userId},{
+                score:score,
+                lastQuestion:question.id
+            });
         }
-        await User.findByIdAndUpdate({_id:currentUser.id},{
-            score:score,
-            lastQuestion:question.id
-        });
+        res.status(200).json({message:"Answer submitted successfully"});
     })
-
-    res.status(200).json({message:"Your response was successfully stored"});
 
 })
 
+
+app.use((error, req, res, next) => {
+    console.log("\n###### Error ######## \n\n", error.stack);
+    const status = error.statusCode || 500;
+    const message = (error.message && error.message)
+        || (error.hasOwnProperty('statusText') && error.statusText)
+        || (error.hasOwnProperty('response') && error.response.hasOwnProperty('statusText') && error.response.statusText)
+    const data = error.response && error.response.error;
+    const customMessage = error.customMessage && error.customMessage
+    res.status(status).json({ message: message, data: data, customMessage: customMessage });
+})
 app.listen(5000);
