@@ -4,6 +4,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const User = require('./model/user');
+const Question = require("./model/question");
+const Location = require("./model/location");
 
 
 
@@ -37,6 +40,55 @@ app.all('*', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../build', 'index.html'));
 })
 
+app.post("/signin",(req,res) => {
+    const { email, password } = req.body;
+    User.findOne({ email }, async (err, user) => {
+        if (err || !user) {
+            const profileName = user.email.split('@')[0]
+            const newUser = new User({
+                email: email,
+                password: password,
+                userName: profileName
+            });
+            const savedUser = await newUser.save();
+            if (!savedUser) {
+                return res.status(400).json({
+                    error: "User with that email does not exist.",
+                });
+            } else {
+                return res.json({ userId: savedUser.id, userName: savedUser.userName, score : savedUser.score , spinLeft : savedUser.spinLeft});
+            }
+        }
+        if (!user.authenticate(password)) {
+            return res.status(401).json({
+                error: "Password is incorrect",
+            });
+        }
+        return res.json({ userId: user.id, userName: user.userName, score : user.score , spinLeft : user.spinLeft});
+    });
+})
+
+app.get("/locations",async (req,res) => {
+    const locations = await Location.find({}).lean();
+    res.status(200).json(locations);
+})
+
+app.get("/question",async (req,res) => {
+    let locationId = req.query.locationId;
+    let userId = req.query.userId;
+    const user = await User.findById(userId);
+    if(!user) {
+        return res.status(400).json({
+            error: "User with that email does not exist.",
+        });
+    }
+    const question = await Question.aggregate([{$match: { locationId : locationId, _id : { $ne : user.lastQuestion}}},{$sample: {size: 1}}]);
+    res.status(200).json({question : question});
+})
+
+app.post("/verify-answer",async (req,res) => {
+    
+})
 
 
 app.use((error, req, res, next) => {
