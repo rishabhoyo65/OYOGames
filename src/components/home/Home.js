@@ -4,6 +4,7 @@ import Navbar from "../common/navbar/Navbar";
 import { IMAGE_PATH, ICON_PATH } from "../../utilities/constant";
 
 
+
 export default function Home() {
     return (
         <div className="page">
