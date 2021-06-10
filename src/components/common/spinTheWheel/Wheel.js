@@ -5,16 +5,14 @@ export default function Wheel(props) {
     const [selectedItem, setSelectedItem] = useState(null); 
 
     const selectItem = () => {
-        if (selectedItem === null) {
-          const select = Math.floor(Math.random() * props.items.length);
-          if (props.onSelectItem) {
-            props.onSelectItem(props.items[select]._id);
+        if(props.canSpin) {
+          if (selectedItem === null) {
+            const select = Math.floor(Math.random() * props.items.length);
+            if (props.onSelectItem) {
+              props.onSelectItem(props.items[select]._id);
+            }
+            setSelectedItem(select)
           }
-          setSelectedItem(select)
-        } else {
-          setSelectedItem(null)
-          setTimeout(() => selectItem(), 500);
-          
         }
       }
 

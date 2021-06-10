@@ -5,6 +5,7 @@ import {ICON_PATH,LOCATION_API,QUESTION_API,CORRECT_ANSWER,WRONG_ANSWER,IMAGE_PA
 import Wheel from "./Wheel";
 import axios from 'axios';
 import CustomButton from '../buttons/CustomButton';
+import {SpinnerDiamond} from 'spinners-react';
 
 export default function SpinTheWheel(props) {
     const [locations, setlocations] = useState([]);
@@ -19,9 +20,14 @@ export default function SpinTheWheel(props) {
     })
     const [option , setSelectedOption] = useState(null);
     const [sucess, setSucess] = useState(false);
+    const [isLoading, setLoading] = useState(false);
 
     const handleSpinSelect = (id) => {
-        setSelectedLocation(id);
+        setTimeout(() => setSelectedLocation(id),4500)
+    }
+
+    const loadWithDelay = () => {
+        setTimeout(() => setLoading(false), 500)
     }
 
     const handlePageChange = () => {
@@ -46,6 +52,7 @@ export default function SpinTheWheel(props) {
     }
 
     const handleSubmit = () => {
+        setLoading(true)
         let payload = {
             answer : option,
             questionId : question.id,
@@ -61,13 +68,16 @@ export default function SpinTheWheel(props) {
                     setSucess(response.data.sucess);
                     handlePageChange();
                 }
+                loadWithDelay()
             })
             .catch(err => {
                 console.log(err)
+                loadWithDelay()
             })
     }
 
     const getQuestion = () => {
+        setLoading(true)
         let params = {
             locationId : selectedLocation,
             userId : localStorage.getItem('userId')
@@ -85,9 +95,11 @@ export default function SpinTheWheel(props) {
                         options : response.data.question[0].options
                      })
                  }
+                 loadWithDelay()
              })
              .catch((err) => {
                  console.log(err);
+                 loadWithDelay()
              })
     }
 
@@ -96,15 +108,18 @@ export default function SpinTheWheel(props) {
     }
 
     useEffect(() => {
+        setLoading(true)
         axios.get(LOCATION_API)
              .then(response => {
                  if(response && response.data) {
                      let locations = response.data || [];
                      setlocations(locations)
                  }
+                 loadWithDelay()
              })
              .catch(err => {
                  console.log(err)
+                 loadWithDelay()
              })
     },[])
 
@@ -112,7 +127,11 @@ export default function SpinTheWheel(props) {
 
     if(page === 1) {
         displayJsx = <div className="wheel-block">
-                        <Wheel items={locations} onSelectItem={handleSpinSelect}/>
+                        <div className="score-card">
+                            <p>{`Your Current Score : ${localStorage.getItem('score')}`}</p>
+                            <p>{`Spin Left : ${localStorage.getItem('spinLeft')}`}</p>
+                        </div>
+                        <Wheel items={locations} onSelectItem={handleSpinSelect} canSpin={(parseInt(localStorage.getItem('spinLeft')) > 0) ? true : false}/>
                         {(selectedLocation) ? <CustomButton type="colored" color="green" buttonName="Ready For Question" padding="16" onClick={handlePageChange}/> : null}
                     </div>
     } else if (page === 2){
@@ -151,9 +170,13 @@ export default function SpinTheWheel(props) {
             <div className="modal-container">
                 <img className="crossmark" src={ICON_PATH + "white_x.svg"} onClick={handleExitClick} alt=""/>
                 <div className="spinner-backdrop">
-                    <h2 className="game-heading">Spin the wheel</h2>
+                    <SpinnerDiamond enabled={isLoading} size="40%" style={{height : '40%',position : 'absolute' ,top: '50%',
+                    left: '50%', transform: 'translate(-50%,-50%)'}}/>
                     {
-                        displayJsx
+                        (isLoading) ? null : <React.Fragment>
+                                <h2 className="game-heading">Spin the wheel</h2>
+                                {displayJsx}
+                            </React.Fragment>
                     }
                 </div>
             </div> 
