@@ -86,8 +86,40 @@ app.get("/question",async (req,res) => {
     res.status(200).json({question : question});
 })
 
+app.get("/leaderboard",async (req,res) => {
+
+    User.find({}, function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    })
+    .sort({ score: 1 });
+})
+
 app.post("/verify-answer",async (req,res) => {
-    
+    let answer = req.body.answer;
+    let questionId = req.body.id;
+    let currentUser;
+
+    Question.findOne({_id : questionId},(err, question)=>{
+        if(err || !question){
+            console.log("No such question exists");
+        }
+        
+        let score = currentUser.score;
+        if(question.answer == answer){
+            score+=1;
+        }
+        await User.findByIdAndUpdate({_id:currentUser.id},{
+            score:score,
+            lastQuestion:question.id
+        });
+    })
+
+    res.status(200).json({message:"Your response was successfully stored"});
+
 })
 
 
