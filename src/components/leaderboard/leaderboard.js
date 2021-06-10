@@ -68,14 +68,14 @@ export default function Leaderboard(props) {
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableBody>
-                    {users.map((user,index) => (
+                    {props.users.map((user,index) => (
                         <StyledTableRow key={index+1} style={{ position: "relative" }}>
                             <hr style={{ position: "absolute",top: "49px",left: "48px",width: "510px",
                                         borderBottom: "2px solid " + getColor(index+1)}}
                             />
 
                             <StyledTableCell  style={{ width: 100 }}component="th" scope="row">
-                                <div style={{position: "relative",backgroundColor: getColor(user.rank),
+                                <div style={{position: "relative",backgroundColor: getColor(index+1),
                                             borderRadius: "100%",width: "50px",height: "50px"}}>
                                     <div style={{
                                         position: "absolute",left: "50%",top: "50%",
@@ -86,7 +86,7 @@ export default function Leaderboard(props) {
                                     </div>
                                 </div>
                             </StyledTableCell>
-                            <StyledTableCell style={{ width: 400 }} >{user.username}</StyledTableCell>
+                            <StyledTableCell style={{ width: 400 }} >{user.userName}</StyledTableCell>
                             <StyledTableCell style={{ width: 100 }} >{user.score}</StyledTableCell>
                         </StyledTableRow>
                     ))}
