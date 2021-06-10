@@ -126,15 +126,4 @@ app.post("/api/verify-answer",async (req,res) => {
 
 })
 
-
-app.use((error, req, res, next) => {
-    console.log("\n###### Error ######## \n\n", error.stack);
-    const status = error.statusCode || 500;
-    const message = (error.message && error.message)
-        || (error.hasOwnProperty('statusText') && error.statusText)
-        || (error.hasOwnProperty('response') && error.response.hasOwnProperty('statusText') && error.response.statusText)
-    const data = error.response && error.response.error;
-    const customMessage = error.customMessage && error.customMessage
-    res.status(status).json({ message: message, data: data, customMessage: customMessage });
-})
 app.listen(5000);

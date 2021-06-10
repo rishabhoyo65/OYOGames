@@ -1,5 +1,5 @@
 .game-section{
-    padding: 20px 10px ;
+    padding: 0 10px ;
     width: 60%;
     height:fit-content;
     display:flex;
@@ -9,5 +9,9 @@
 
 }
 .leaderboard{
-    height:1000px;
+    height:100%;
+}
+.leaderboard-table {
+    padding-bottom: 50px;
+    background-color: white;
 }

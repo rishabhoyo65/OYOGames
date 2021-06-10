@@ -20,12 +20,12 @@ const users = [
 const triangle = {
     width: "0",
     height: "0",
-    borderLeft: "300px solid transparent",
-    borderRight: "300px solid transparent",
+    borderLeft: "250px solid white",
+    borderRight: "250px solid white",
     borderTop: "75px solid red"
 };
 const rectangle = {
-    width: "600px",
+    width: "500px",
     height: "100px",
     backgroundColor: "red"
 };
@@ -50,11 +50,11 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const getColor = function(rank){
-    if(rank==1)
+    if(rank % 4 ===1)
       return "#d4af37";
-    else if(rank==2)
+    else if(rank % 4 ===2)
       return "silver";
-    else if(rank==3)
+    else if(rank % 4 ===3)
       return "#CD7F32";
     
     return "red";
@@ -66,15 +66,16 @@ const useStyles = makeStyles({
 //props - list of Users(rank,username,score) 
 export default function Leaderboard(props) {
     const classes = useStyles();
+    const userId = localStorage.getItem('userId');
 
     return (
-        <div className="leaderboard-table" style={{ width: "600px"}}>
+        <div className="leaderboard-table" style={{ width: "500px"}}>
             <LeaderboardHead />
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Table className={classes.table} aria-label="simple table">
                     <TableBody>
-                    {users.map((user,index) => (
-                        <StyledTableRow key={index+1} style={{ position: "relative" }}>
+                    {props.users.map((user,index) => (
+                        <StyledTableRow key={index+1} style={{ position: "relative"}}>
                             <hr style={{ position: "absolute",top: "49px",left: "48px",width: "510px",
                                         borderBottom: "2px solid " + getColor(index+1)}}
                             />
@@ -84,20 +85,22 @@ export default function Leaderboard(props) {
                                             borderRadius: "100%",width: "50px",height: "50px"}}>
                                     <div style={{
                                         position: "absolute",left: "50%",top: "50%",
-                                        transform: "translate(-50%, -50%)",color: "white"}}>
+                                        transform: "translate(-50%, -50%)",color: (userId === user.id) ? "#2f922f":"white"}}>
 
                                         {index+1}
 
                                     </div>
                                 </div>
                             </StyledTableCell>
-                            <StyledTableCell style={{ width: 400 }} >{user.username}</StyledTableCell>
-                            <StyledTableCell style={{ width: 100 }} >{user.score}</StyledTableCell>
+                            <StyledTableCell style={{ width: 400, color :  (userId === user.id) ? "#2f922f": "rgba(0, 0, 0, 0.87)" }} >{user.username}</StyledTableCell>
+                            <StyledTableCell style={{ width: 100, color :  (userId === user.id) ? "#2f922f": "rgba(0, 0, 0, 0.87)" }} >{user.score}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <div className="">
+            </div>
         </div>
     )
 }
