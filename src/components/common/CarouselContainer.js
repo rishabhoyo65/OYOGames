@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel } from 'react-bootstrap';
+import Carousel from 'react-bootstrap/Carousel'
 import { IMAGE_PATH, ICON_PATH } from "../../utilities/constant";
 
 

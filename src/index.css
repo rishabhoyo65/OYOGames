@@ -22,4 +22,17 @@ code {
   --buttonRed : #EE2A24;
   --blackHigh : #212121;
   --borderColor : rgba(0, 0, 0, 0.12);
+  --wheel-font: 'Lato', 'Quicksand', sans-serif;
+  --wheel-size: 400px;
+  --wheel-slice-spacing: 50px;
+  --wheel-border-size: 5px;
+  --wheel-color: #da3768;
+  --neutral-color: white;
+  --PI: 3.14159265358979;
+  --nb-item: 0;
+  --item-nb: 0;
+  --selected-item: 0;
+  --nb-turn: 5;
+  --spinning-duration: 4s;
+  --reset-duration: 0.25s;
 }

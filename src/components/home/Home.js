@@ -4,7 +4,12 @@ import Navbar from "../common/navbar/Navbar";
 import { IMAGE_PATH, ICON_PATH } from "../../utilities/constant";
 
 
-export default function Home() {
+export default function Home(props) {
+
+    const navigateToGameZone = () => {
+        props.history.push("/gamezone");
+    }
+
     return (
         <div className="page">
             <Navbar/>
@@ -12,7 +17,7 @@ export default function Home() {
                 <div >
                     <img src={IMAGE_PATH + "search.png"} alt="main" style={{width:"100%"}}/>
                 </div>
-                <div  style={{ width:"100%", height: 150,backgroundColor: 'green' }}>
+                <div  style={{ width:"100%", height: 150,backgroundColor: 'green' }} onClick={navigateToGameZone}>
                     <p style={{ textAlign:"center",fontSize: 30}}>  <b>Game Section</b></p>
                 </div>
                 <div >
