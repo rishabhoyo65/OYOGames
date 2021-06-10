@@ -40,11 +40,11 @@ app.all('*', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../build', 'index.html'));
 })
 
-app.post("/signin",(req,res) => {
+app.post("/api/signin",(req,res) => {
     const { email, password } = req.body;
     User.findOne({ email }, async (err, user) => {
         if (err || !user) {
-            const profileName = user.email.split('@')[0]
+            const profileName = email.split('@')[0]
             const newUser = new User({
                 email: email,
                 password: password,
@@ -68,12 +68,12 @@ app.post("/signin",(req,res) => {
     });
 })
 
-app.get("/locations",async (req,res) => {
+app.get("/api/locations",async (req,res) => {
     const locations = await Location.find({}).lean();
     res.status(200).json(locations);
 })
 
-app.get("/question",async (req,res) => {
+app.get("/api/question",async (req,res) => {
     let locationId = req.query.locationId;
     let userId = req.query.userId;
     const user = await User.findById(userId);
@@ -125,15 +125,4 @@ app.post("/verify-answer",async (req,res) => {
 
 })
 
-
-app.use((error, req, res, next) => {
-    console.log("\n###### Error ######## \n\n", error.stack);
-    const status = error.statusCode || 500;
-    const message = (error.message && error.message)
-        || (error.hasOwnProperty('statusText') && error.statusText)
-        || (error.hasOwnProperty('response') && error.response.hasOwnProperty('statusText') && error.response.statusText)
-    const data = error.response && error.response.error;
-    const customMessage = error.customMessage && error.customMessage
-    res.status(status).json({ message: message, data: data, customMessage: customMessage });
-})
 app.listen(5000);
