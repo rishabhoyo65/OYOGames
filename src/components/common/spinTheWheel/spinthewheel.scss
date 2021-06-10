@@ -50,6 +50,12 @@
   row-gap: 30px;
   align-items: center;
 }
+.score {
+  color: white;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+}
 
 .quiz-block {
   width: 100%;
@@ -104,7 +110,7 @@
     }
         
     .options:hover {
-      background-color: #555e7d;
+      background-color: #2f922f;
     }
     
     .options:focus {

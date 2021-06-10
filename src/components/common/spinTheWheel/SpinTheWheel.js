@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import Modal from '../modal/Modal';
 import "./spinthewheel.scss";
-import {ICON_PATH,LOCATION_API,QUESTION_API,CORRECT_ANSWER,WRONG_ANSWER,IMAGE_PATH} from "../../../utilities/constant";
+import {ICON_PATH,LOCATION_API,QUESTION_API,CORRECT_ANSWER,WRONG_ANSWER,IMAGE_PATH,VERIFY_ANSWER} from "../../../utilities/constant";
 import Wheel from "./Wheel";
 import axios from 'axios';
 import CustomButton from '../buttons/CustomButton';
@@ -31,8 +31,40 @@ export default function SpinTheWheel(props) {
         } else if (page === 2) {
             setPage(3);
         } else {
+            setSelectedLocation("");
+            setQuestion({
+                id : "",
+                content : "",
+                type : "",
+                image : "",
+                options : []
+            })
+            setSelectedOption(null);
             setPage(1);
+            setSucess(false)
         }
+    }
+
+    const handleSubmit = () => {
+        let payload = {
+            answer : option,
+            questionId : question.id,
+            userId : localStorage.getItem('userId'),
+            score : parseInt(localStorage.getItem('score'))
+        }
+        axios.post(VERIFY_ANSWER,payload)
+            .then(response => {
+                if(response && response.data) {
+                    if(response.data.sucess) {
+                        localStorage.setItem('score',payload.score + 5)
+                    }
+                    setSucess(response.data.sucess);
+                    handlePageChange();
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const getQuestion = () => {
@@ -103,13 +135,13 @@ export default function SpinTheWheel(props) {
                             </div>
                             
                         </div>
-                        {(option) ? <CustomButton type="colored" color="green" buttonName="Submit" padding="128" onClick={handlePageChange}/>: null}
+                        {(option) ? <CustomButton type="colored" color="green" buttonName="Submit" padding="128" onClick={handleSubmit}/>: null}
                     </div>
     } else {
-        displayJsx = <div className="flex-start-column">
-            <h2 className="question">{(sucess) ? CORRECT_ANSWER : WRONG_ANSWER}</h2>
+        displayJsx = <div className="flex-start-column rg-20">
+            <h2 className="score">{(sucess) ? CORRECT_ANSWER : WRONG_ANSWER}</h2>
             <img src={`${IMAGE_PATH}${(sucess) ?"status_positive.svg" : "status_negative.svg"}`} alt=""/>
-            <h2 className="question">{`You collected +${(sucess) ? "5": "0"} score`}</h2>
+            <h2 className="score">{`You collected +${(sucess) ? "5": "0"} score`}</h2>
             <CustomButton type="colored" color="green" buttonName="Start Again" padding="128" onClick={handlePageChange}/>
         </div>
     }

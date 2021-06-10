@@ -90,15 +90,12 @@ app.get("/api/leaderboard",async (req,res) => {
 
     User.find({}, function(err, result) {
       if (err) {
-        console.log(err);
+        return res.status(400).json({error : "Database Error"})
       } else {
-        res.json(result);
-        console.log("here");
+        return res.status(200).json(result);
       }
     })
     .sort({ score: -1 });
-
-    console.log("here");
 })
 
 app.post("/api/verify-answer",async (req,res) => {
@@ -107,23 +104,24 @@ app.post("/api/verify-answer",async (req,res) => {
     let userId= req.body.userId;
     let score= req.body.score;
     Question.findOne({_id : questionId},async (err, question)=>{
-        if(err){
-            console.log(err);
-        }
-        if(!question){
-            console.log("No such question exists");
-        }
-        else {
-            if(question.answer == answer){
-                score+=1;
-            }
-            console.log("Updated score"+ score);
-            await User.findByIdAndUpdate({_id:userId},{
-                score:score,
-                lastQuestion:question.id
+        if(err || !question){
+            return res.status(400).json({
+                error: "Question Not Found",
             });
         }
-        res.status(200).json({message:"Answer submitted successfully"});
+        else {
+            if(question.answer === answer){
+                score += 5;
+                console.log("Updated score"+ score);
+                await User.findByIdAndUpdate({_id:userId},{
+                    score:score,
+                    lastQuestion:question.id
+                });
+                res.status(200).json({sucess : true});
+            }
+            res.status(200).json({sucess : false});
+        }
+        
     })
 
 })
