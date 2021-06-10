@@ -44,7 +44,7 @@ app.post("/api/signin",(req,res) => {
     const { email, password } = req.body;
     User.findOne({ email }, async (err, user) => {
         if (err || !user) {
-            const profileName = email.split('@')[0]
+            const profileName = user.email.split('@')[0]
             const newUser = new User({
                 email: email,
                 password: password,
@@ -86,8 +86,57 @@ app.get("/api/question",async (req,res) => {
     res.status(200).json({question : question});
 })
 
-app.post("/verify-answer",async (req,res) => {
-    
+app.get("/api/leaderboard",async (req,res) => {
+
+    User.find({}, function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+        console.log("here");
+      }
+    })
+    .sort({ score: -1 });
+
+    console.log("here");
 })
 
+app.post("/api/verify-answer",async (req,res) => {
+    let answer = req.body.answer;
+    let questionId = req.body.questionId;
+    let userId= req.body.userId;
+    let score= req.body.score;
+    Question.findOne({_id : questionId},async (err, question)=>{
+        if(err){
+            console.log(err);
+        }
+        if(!question){
+            console.log("No such question exists");
+        }
+        else {
+            if(question.answer == answer){
+                score+=1;
+            }
+            console.log("Updated score"+ score);
+            await User.findByIdAndUpdate({_id:userId},{
+                score:score,
+                lastQuestion:question.id
+            });
+        }
+        res.status(200).json({message:"Answer submitted successfully"});
+    })
+
+})
+
+
+app.use((error, req, res, next) => {
+    console.log("\n###### Error ######## \n\n", error.stack);
+    const status = error.statusCode || 500;
+    const message = (error.message && error.message)
+        || (error.hasOwnProperty('statusText') && error.statusText)
+        || (error.hasOwnProperty('response') && error.response.hasOwnProperty('statusText') && error.response.statusText)
+    const data = error.response && error.response.error;
+    const customMessage = error.customMessage && error.customMessage
+    res.status(status).json({ message: message, data: data, customMessage: customMessage });
+})
 app.listen(5000);
