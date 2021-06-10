@@ -20,12 +20,12 @@ const users = [
 const triangle = {
     width: "0",
     height: "0",
-    borderLeft: "300px solid transparent",
-    borderRight: "300px solid transparent",
-    borderTop: "75px solid red"
+    borderLeft: "240px solid transparent",
+    borderRight: "240px solid transparent",
+    borderTop: "90px solid red"
 };
 const rectangle = {
-    width: "600px",
+    width: "480px",
     height: "100px",
     backgroundColor: "red"
 };
@@ -68,14 +68,14 @@ export default function Leaderboard(props) {
     const classes = useStyles();
 
     return (
-        <div className="leaderboard-table" style={{ width: "600px"}}>
+        <div className="leaderboard-table" style={{ width: "480px"}}>
             <LeaderboardHead />
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableBody>
                     {users.map(user => (
                         <StyledTableRow key={user.rank} style={{ position: "relative" }}>
-                            <hr style={{ position: "absolute",top: "49px",left: "48px",width: "510px",
+                            <hr style={{ position: "absolute",top: "49px",left: "48px",width: "0px",
                                         borderBottom: "2px solid " + getColor(user.rank)}}
                             />
 
