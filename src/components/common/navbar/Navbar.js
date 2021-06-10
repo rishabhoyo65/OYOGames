@@ -1,19 +1,23 @@
 import React, {useState,useRef} from 'react'
 import './navbar.scss';
-import { Redirect } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import {ICON_PATH,IMAGE_PATH} from '../../../utilities/constant';
 import LanguageSelector from "../languageSelector/LanguageSelector";
 
 
 export default function Navbar() {
-
+    const history = useHistory();
     const [isLogoutWindowOpen, setLogOutWindow] = useState(false);
     const logoutRef = useRef();
-    const [userName, setUserName] = useState("Sachin");
+    const userName = localStorage.getItem("userName");
 
     function onHandleLogout(){
-        setUserName("");
+        localStorage.setItem("userId", '');
+        localStorage.setItem("userName", '');
+        localStorage.setItem("score", 0);
+        localStorage.setItem("spinLeft",0);
+        history.push("/");
     }
 
     
