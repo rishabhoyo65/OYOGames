@@ -59,12 +59,14 @@ export default function SpinTheWheel(props) {
             userId : localStorage.getItem('userId'),
             score : parseInt(localStorage.getItem('score'))
         }
+        let spinLeft = parseInt(localStorage.getItem('spinLeft'));
         axios.post(VERIFY_ANSWER,payload)
             .then(response => {
                 if(response && response.data) {
                     if(response.data.sucess) {
                         localStorage.setItem('score',payload.score + 5)
                     }
+                    localStorage.setItem('spinLeft',spinLeft - 1);
                     setSucess(response.data.sucess);
                     handlePageChange();
                 }
@@ -131,7 +133,12 @@ export default function SpinTheWheel(props) {
                             <p>{`Your Current Score : ${localStorage.getItem('score')}`}</p>
                             <p>{`Spin Left : ${localStorage.getItem('spinLeft')}`}</p>
                         </div>
-                        <Wheel items={locations} onSelectItem={handleSpinSelect} canSpin={(parseInt(localStorage.getItem('spinLeft')) > 0) ? true : false}/>
+                        <div className="flex wd-100">
+                            <Wheel items={locations} onSelectItem={handleSpinSelect} canSpin={(parseInt(localStorage.getItem('spinLeft')) > 0) ? true : false}/>
+                            <ul className="rules">
+
+                            </ul>
+                        </div>
                         {(selectedLocation) ? <CustomButton type="colored" color="green" buttonName="Ready For Question" padding="16" onClick={handlePageChange}/> : null}
                     </div>
     } else if (page === 2){
