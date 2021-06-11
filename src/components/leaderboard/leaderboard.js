@@ -50,11 +50,11 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const getColor = function(rank){
-    if(rank % 4 ===1)
+    if(rank ===1)
       return "#d4af37";
-    else if(rank % 4 ===2)
+    else if(rank ===2)
       return "silver";
-    else if(rank % 4 ===3)
+    else if(rank ===3)
       return "#CD7F32";
     
     return "red";

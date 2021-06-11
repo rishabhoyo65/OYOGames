@@ -136,7 +136,11 @@ export default function SpinTheWheel(props) {
                         <div className="flex wd-100">
                             <Wheel items={locations} onSelectItem={handleSpinSelect} canSpin={(parseInt(localStorage.getItem('spinLeft')) > 0) ? true : false}/>
                             <ul className="rules">
-
+                                <h3>Rules:</h3>
+                                <li>#. Spin for a location based quiz.</li>
+                                <li>#. You can only spin once.</li>
+                                <li>#. Recieve +5 points for a right answer.</li>
+                                <li>#. Click anywhere on the wheel, to spin.</li>
                             </ul>
                         </div>
                         {(selectedLocation) ? <CustomButton type="colored" color="green" buttonName="Ready For Question" padding="16" onClick={handlePageChange}/> : null}
@@ -166,7 +170,7 @@ export default function SpinTheWheel(props) {
     } else {
         displayJsx = <div className="flex-start-column rg-20">
             <h2 className="score">{(sucess) ? CORRECT_ANSWER : WRONG_ANSWER}</h2>
-            <img src={`${IMAGE_PATH}${(sucess) ?"status_positive.svg" : "status_negative.svg"}`} alt=""/>
+            <img src={`${IMAGE_PATH}${(sucess) ?"right.jpeg" : "wrong.png"}`} alt=""/>
             <h2 className="score">{`You collected +${(sucess) ? "5": "0"} score`}</h2>
             <CustomButton type="colored" color="green" buttonName="Start Again" padding="128" onClick={handlePageChange}/>
         </div>
