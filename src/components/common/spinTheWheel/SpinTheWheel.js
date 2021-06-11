@@ -59,12 +59,14 @@ export default function SpinTheWheel(props) {
             userId : localStorage.getItem('userId'),
             score : parseInt(localStorage.getItem('score'))
         }
+        let spinLeft = parseInt(localStorage.getItem('spinLeft'));
         axios.post(VERIFY_ANSWER,payload)
             .then(response => {
                 if(response && response.data) {
                     if(response.data.sucess) {
                         localStorage.setItem('score',payload.score + 5)
                     }
+                    localStorage.setItem('spinLeft',spinLeft - 1);
                     setSucess(response.data.sucess);
                     handlePageChange();
                 }

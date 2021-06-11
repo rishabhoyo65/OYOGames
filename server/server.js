@@ -112,14 +112,17 @@ app.post("/api/verify-answer",async (req,res) => {
         else {
             if(question.answer === answer){
                 score += 5;
-                console.log("Updated score"+ score);
-                await User.findByIdAndUpdate({_id:userId},{
-                    score:score,
-                    lastQuestion:question.id
-                });
-                res.status(200).json({sucess : true});
             }
-            res.status(200).json({sucess : false});
+            await User.findByIdAndUpdate({_id:userId},{
+                score:score,
+                lastQuestion:question.id,
+                $inc : {spinLeft : -1}
+            });
+            if(question.answer === answer){
+                res.status(200).json({sucess : true});
+            } else {
+                res.status(200).json({sucess : false});
+            }
         }
         
     })
