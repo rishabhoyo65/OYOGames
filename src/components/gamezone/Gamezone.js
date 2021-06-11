@@ -8,6 +8,7 @@ import SpinTheWheel from "../common/spinTheWheel/SpinTheWheel";
 import Leaderboard from '../leaderboard/leaderboard';
 import axios from 'axios';
 import Spinner from "../common/spinner/Spinner";
+import Sliders from "../slider/slider";
 
 
 export default function Gamezone(props) {
@@ -44,17 +45,19 @@ export default function Gamezone(props) {
             {(isSpinWheelOpen) ? <SpinTheWheel onExit={() => {setSpinWheel(!isSpinWheelOpen); updateLeaderboard();} }/> : null}
             <div className="page-main flex-column rg-20" style={{backgroundColor : "#f1f3f6"}}>
             {/* <CarouselContainer /> */}
-                <img src={IMAGE_PATH + "gamezone.png"} alt="" />
+                <div>
+                    <Sliders />
+                </div>
                 <div className="flex-space wd-100">
                     <div className="game-section">
-                    <img src={IMAGE_PATH + "spinQuiz.png"} alt="main" style={{width:"80%"}} onClick={() => setSpinWheel(!isSpinWheelOpen)}/>
-                    <img src={IMAGE_PATH + "slotmachine.png"} alt="main" style={{width:"80%"}}/>
+                        <img src={IMAGE_PATH + "spinQuiz.png"} alt="main" style={{width:"80%"}} onClick={() => setSpinWheel(!isSpinWheelOpen)}/>
+                        <img src={IMAGE_PATH + "slotmachine.png"} alt="main" style={{width:"80%"}}/>
+                        <img src={IMAGE_PATH + "pool.png"} alt="main" style={{width:"80%"}}/>
                     </div>
-                    
                     <div className="leaderboard">
                         <Leaderboard users={users}/>
                     </div>
-                </div>
+                </div>    
             </div>
         </div>
     )

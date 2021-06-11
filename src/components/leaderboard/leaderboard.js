@@ -76,7 +76,7 @@ export default function Leaderboard(props) {
                     <TableBody>
                     {props.users.map((user,index) => (
                         <StyledTableRow key={index+1} style={{ position: "relative"}}>
-                            <hr style={{ position: "absolute",top: "49px",left: "48px",width: "510px",
+                            <hr style={{ position: "absolute",top: "49px",left: "48px",width: "0px",
                                         borderBottom: "2px solid " + getColor(index+1)}}
                             />
 

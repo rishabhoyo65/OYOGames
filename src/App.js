@@ -14,6 +14,9 @@ function App() {
           <Route path="/" exact component={SignIn} />
           <Route path="/home" exact component={Home} />
           <Route path="/gamezone" exact component={Gamezone} />
+          
+          
+
         </Switch>
       </Suspense>
     </div>
