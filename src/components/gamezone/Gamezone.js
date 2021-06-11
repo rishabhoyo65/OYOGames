@@ -50,9 +50,9 @@ export default function Gamezone(props) {
                 </div>
                 <div className="flex-space wd-100">
                     <div className="game-section">
-                        <img src={IMAGE_PATH + "spinQuiz.png"} alt="main" style={{width:"80%"}} onClick={() => setSpinWheel(!isSpinWheelOpen)}/>
-                        <img src={IMAGE_PATH + "slotmachine.png"} alt="main" style={{width:"80%"}}/>
-                        <img src={IMAGE_PATH + "pool.png"} alt="main" style={{width:"80%"}}/>
+                        <img src={IMAGE_PATH + "spinQuiz.png"} alt="main" style={{width:"45%" , height : "300px"}} onClick={() => setSpinWheel(!isSpinWheelOpen)}/>
+                        <img src={IMAGE_PATH + "slotmachine.png"} alt="main" style={{width:"45%" ,height : "300px"}}/>
+                        <img src={IMAGE_PATH + "pool.png"} alt="main" style={{width:"45%", height : "300px"}}/>
                     </div>
                     <div className="leaderboard">
                         <Leaderboard users={users}/>
